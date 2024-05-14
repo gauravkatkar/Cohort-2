@@ -1,0 +1,40 @@
+<html>
+
+<script>
+
+    let timeout;
+    function debouncePopluateDiv(){
+        //delay the call to popluate div until i have not been called for 100 ms
+        //and I have atleasr call for once
+        cleartimeout(timeout);
+         timeout = setTimeout(function(){
+            populateDiv()
+        }, 100);
+       
+    }
+    function populateDiv(){
+        const a = document.getElementById("firstNumber").value;
+        const b = document.getElementById("secondNumber").value;
+
+        fetch("sum-server.100xdevs.com/sum?a="+a+ "&b="+b )
+        .then(function(response){
+            console.log(response);
+
+            response.text().then(function(ans)
+            {
+               document.getElementById("finalSum").innerHTML = ans;
+            })
+        })
+       // const element = document.getElementById("finalSum")    
+       // element.innerHTML = parseInt(a)+parseInt(b);
+}
+</script>
+    <body>
+        <input oninput="debouncePopluateDiv()" id="firstNumber" type="text" placeholder="First number"></input>
+        <br>
+      <input oninput="debouncePopluateDiv()" id="secondNumber" type="text" placeholder="Second number"></input>
+        <br>
+        <div id="finalSum"></div>
+
+    </body>
+</html> 
